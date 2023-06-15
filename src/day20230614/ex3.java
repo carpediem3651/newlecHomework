@@ -3,8 +3,9 @@ package day20230614;
 public class ex3 {
 
 	public static void main(String[] args) {
-		//1+2!+3!+4!+5!의 값을 구하라
-//		풀이 1
+		//문제) 1!+2!+3!+4!+5!의 값을 구하라		
+//		풀이 1)
+		
 //		int num = 1; // 핵심
 //		int sum = 0;
 //		
@@ -15,13 +16,15 @@ public class ex3 {
 //		
 //		System.out.println(sum);
 		
-		int result =1;
-		int totalSum = 0;
-		for(int i = 0, n = 1; i < 5; i++, n++) {
-			result = n * result ;
-			totalSum += result;
-		}
-		System.out.println(totalSum);
+//		풀이2)
+		
+//		int result =1;
+//		int totalSum = 0;
+//		for(int i = 0, n = 1; i < 5; i++, n++) {
+//			result = n * result ;
+//			totalSum += result;
+//		}
+//		System.out.println(totalSum);
 		
 		// n=1 1 x result(1)
 		// n=2 2 x 1(result)
