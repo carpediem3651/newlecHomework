@@ -15,6 +15,8 @@ public class ex3 {
 //		}
 //		
 //		System.out.println(sum);
+	
+
 		
 //		풀이2)
 		
@@ -34,5 +36,4 @@ public class ex3 {
 		// --> result = n x result 규칙을 찾아냄.
 		
 	}
-
 }
