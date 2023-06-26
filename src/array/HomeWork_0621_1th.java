@@ -2,7 +2,7 @@ package array;
 
 import java.util.Scanner;
 
-public class day20230621 {
+public class HomeWork_0621_1th {
 
 	public static void main(String[] args) {
 //		문제1.정수, 실수, 문자, boolean 배열로 표현하시오.
