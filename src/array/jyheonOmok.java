@@ -121,7 +121,7 @@ public class jyheonOmok {
 		                        if((board[oy][ox] == '○') || (board[oy][ox] == '●')) {
 		                           System.out.println("이미 놓아진 자리입니다.");
 		                           System.out.println();
-		                           i--;
+		                           i--; // i--?
 		                           continue;
 		                        } else {
 		                           for(int y=0; y<height; y++) {
@@ -139,7 +139,7 @@ public class jyheonOmok {
 		                     System.out.printf("%d회 남았습니다.", 10-(i+1));
 		                     System.out.println();
 		                     //=====================10회 일 때========================
-		                     if((i+1)/10==1) {
+		                     if((i+1)/10==1) { //10회 수행했다는 걸 나타낸다. 10회가 되었을 때 true가되면서 블록안으로 들어감.
 		                        System.out.println("게임이 끝났습니다. 메인으로 돌아갑니다.");
 		                        break MAIN;
 		                     }
