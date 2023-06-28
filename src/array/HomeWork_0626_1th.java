@@ -1,130 +1,197 @@
 package array;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Scanner;
 
 public class HomeWork_0626_1th {
 
-	public static void main(String[] args) {
-		char board[][] = new char[12][12];// 12*12 바둑판 배열
-		boolean chk[][] = new boolean[12][12];// 중복값 판별용 배열
+	public static void main(String[] args) throws IOException {
 
-		// ----------------------------------------------------초기 바둑판 양식 배열에 저장
-		for (int y = 0; y < 12; y++) { // 바둑판 만들기
-			for (int x = 0; x < 12; x++) {
-				board[y][x] = '┼';
-				board[y][11] = '┤';
-				board[0][x] = '┬';
-				board[11][x] = '┴';
-				board[y][0] = '├';
-				board[0][0] = '┌';
-				board[0][11] = '┐';
-				board[11][0] = '└';
-				board[11][11] = '┘';
+		/* ★★★★★★★★★★★★★★★변수선언★★★★★★★★★★★★★★★★★★★★ */
+
+		Scanner scan = new Scanner(System.in);
+
+		int menu = -1;
+		int ox = -1;
+		int oy = -1;
+		int width = 12; //바둑판 넓이
+		int height = 12; // 바둑판 높이
+		final int BLACK_STONE = 2; // 검은돌을 선택할 때 2가 찍힌다. 상수형 변수
+		final int WHITE_STONE = 1;  // 하얀돌을 선택할 때 1이 찍힌다.
+		char[][] board = new char[height][width]; // 바둑판
+		
+
+		/* ★★★★★★★★★★★★★★★★메인메뉴★★★★★★★★★★★★★★★★★★★★ */
+		OVER: while (true) {
+			do {
+				System.out.println("┌───────────┐");
+				System.out.println("           Omok Game   ");
+				System.out.println("                  by hjh    ");
+				System.out.println("└───────────┘");
+				System.out.println("1. 게임시작");
+				System.out.println("2. 도움말");
+				System.out.println("3. 종료");
+				System.out.print(">");
+				menu = scan.nextInt();
+
+				if (!(0 < menu && menu < 4)) {
+					System.out.println("잘못된 값을 넣었습니다.");
+					System.out.println("1, 2, 3 중에 선택하세요.");
+					System.out.println();
+				}
 				
-				chk[x][y] = false;
-				System.out.printf("%c", board[y][x]);
-			}
-			System.out.println();
-		} // 바둑판 만들기 닫기
-			// ----------------------------------------------------
-		int ox = -1; // 돌
-		int oy = -1; // 돌
+						
+			} while (!(0 < menu && menu < 4));
 
-		// 이전좌표
-		int xBefore = -1;
-		int yBefore = -1;
-
-		QUIT: while (true) {
-			Scanner scan = new Scanner(System.in);
-
-			System.out.println("┌───────────────────────────┐");
-			System.out.println("│          Omok Game        │");
-			System.out.println("└───────────────────────────┘");
-			System.out.println();
-
-			System.out.println("1. 게임시작");
-			System.out.println("2. 도움말");
-			System.out.println("3. 종료");
-			System.out.print(">");
-			int option = scan.nextInt();
-
-			switch (option) {
-			// 1. 게임시작
+			MAIN: switch (menu) {
 			case 1: {
 
-				int count = 1;// 홀수일때 흰돌, 짝수일때 검돌
+				// ---------바둑판에 ┼값 넣기-------------
+				for (int y = 0; y < height; y++)
+					for (int x = 0; x < width; x++)
+						board[y][x] = '┼';
 
-				GAMEOVER: while (true) {
+				// ---------바둑판에 가장자리 값 넣기-------------
+				for (int y = 0; y < height; y++) { // i
+					for (int x = 0; x < width; x++) { // j
+						board[y][width - 1] = '┤';
+						board[0][x] = '┬';
+						board[height - 1][x] = '┴';
+						board[y][0] = '├';
+						board[0][0] = '┌';
+						board[0][width - 1] = '┐';
+						board[height - 1][0] = '└';
+						board[height - 1][width - 1] = '┘';
 
-					// 중복 제거 & 첫 사이클은 그냥 지나침.
-					// 첫 사이클부터 통과하면 배열 변수 초기값 -1이여서 오류발생!
-					if (ox != -1 && oy != -1 && !chk[ox][oy]) {
-						xBefore = ox;
-						yBefore = oy;
+						System.out.printf("%c", board[y][x]);
+					} // for x
+					System.out.println();
+				} // for y
+					// -------------빈 바둑판 출력하기 끝---------------
 
-						if (count % 2 == 1)
-							board[ox][oy] = '●';
-						else if (count % 2 == 0)
-							board[ox][oy] = '○';
+				/* ★★★★★★★★★★★★★★★바둑돌 놓기★★★★★★★★★★★★★★ */
 
-						chk[ox][oy] = true;
-						count++;
+				System.out.println("10회 남았습니다.");
 
-						System.out.printf("☆이전 좌표 : [%2d][%2d]☆\n", xBefore, yBefore);
-					} else if (count > 1)
-						System.out.println("\n☆★☆★중복 좌표입니다.☆★☆★");
+				for (int i = 0; i < 10; i++) {
+					int omokCount = (i + 1) % 2; // 홀짝여부 확인
 
-					// 배열 바둑판 출력 양식.
-					{
-						for (int i = 0; i < 12; i++) {
-							for (int j = 0; j < 12; j++) {
-								System.out.print(board[i][j]);
-							}
-							System.out.println();
+					switch (omokCount) {
+					case WHITE_STONE: {
+						do {
+							System.out.println("좌표값을 입력하세요. (0~11사이 값 입력)");
+							System.out.println("그만두기: -1 0");
+							System.out.println("(x sp y) > ");
+							ox = scan.nextInt();
+							oy = scan.nextInt();
+
+							if (ox == -1 && oy == 0)
+								break MAIN;
+
+							if (!(0 <= ox && ox <= 11) || !(0 <= oy && oy <= 11)) {
+								System.out.println("잘못된 값을 입력했습니다.");
+								System.out.println("좌표값을 입력하세요. (0~11 사이 값 입력)");
+								System.out.println();
+								continue;
+							} // if 오류값 넣었을 때
+
+							if ((board[oy][ox] == '○') || (board[oy][ox] == '●')) {
+								System.out.println("이미 놓아진 자리입니다.");
+								System.out.println();
+								i--; // i--?
+								continue;
+							} else {
+								for (int y = 0; y < height; y++) {
+									for (int x = 0; x < width; x++) { // j
+										board[oy][ox] = '○';
+										System.out.printf("%c", board[y][x]);
+									} // for x
+									System.out.println();
+								} // for y 백돌놓기 종료
+							} // if 종료 (중복제거)
+
+						} while (!(0 <= ox && ox <= 11) || !(0 <= oy && oy <= 11));
+
+						System.out.printf("%d회 남았습니다.", 10 - (i + 1));
+						System.out.println();
+						// =====================10회 일 때========================
+						if ((i + 1) / 10 == 1) { // 10회 수행했다는 걸 나타낸다. 10회가 되었을 때 true가되면서 블록안으로 들어감.
+							System.out.println("게임이 끝났습니다. 메인으로 돌아갑니다.");
+							break MAIN;
 						}
-					}
+						break;
+					} // case 0
+					case BLACK_STONE: {
+						do {
 
-					// 좌표 입력
-					do {
-						System.out.println("\n그만두기:-1");
-						if (count % 2 == 1)
-							System.out.println("● 백돌 차례입니다");
-						else
-							System.out.println("○ 흑돌 차례입니다");
-						System.out.print(" x sp y> ");
+							System.out.println("좌표값을 입력하세요. (0~11사이 값 입력)");
+							System.out.println("그만두기: -1 0");
+							System.out.println("(x sp y) > ");
+							ox = scan.nextInt();
+							oy = scan.nextInt();
+							
 
-						ox = scan.nextInt();
-						if (ox == -1) {
-							System.out.println("GAMEOVER~~");
-							break GAMEOVER;
-						}
-						oy = scan.nextInt();
+							if (ox == -1 && oy == 0)
+								break MAIN;
 
-						// 1~11 범위를 벗어나면 배열 Index오류 발생!! ☆★중요☆★ 예) 15입력시 오류발생해서 멈춤...
-						if (!(1 <= ox && ox <= 11) || !(1 <= oy && oy <= 11)) {
-							System.out.println("\n              ♨경고♨                ");
-							System.out.println("오목 좌표의 범위(-1 or 1~11)를 벗어났습니다.");
-						}
+							if (!(0 <= ox && ox <= 11) || !(0 <= oy && oy <= 11)) {
+								System.out.println("잘못된 값을 입력했습니다.");
+								System.out.println("좌표값을 입력하세요. (0~11 사이 값 입력)");
+								System.out.println();
+								continue;
+							} // if 오류값 넣었을 때
 
-					} while (!(1 <= ox && ox <= 11) || !(1 <= oy && oy <= 11));
-					System.out.println("==================================");
+							if ((board[oy][ox] == '○') || (board[oy][ox] == '●')) {
+								System.out.println("이미 놓아진 자리입니다.");
+								System.out.println();
+								i--;
+								continue;
+							} else {
+								for (int y = 0; y < height; y++) {
+									for (int x = 0; x < width; x++) { // j
+										board[oy][ox] = '●';
+										System.out.printf("%c", board[y][x]);
+									} // for x
+									System.out.println();
+								} // for y 흑돌놓기 종료
+							} // if 종료 (중복제거)
 
-				}
-			}
+						} while (!(0 <= ox && ox <= 11) || !(0 <= oy && oy <= 11));
+
+						System.out.printf("%d회 남았습니다.", 10 - (i + 1));
+						System.out.println();
+						break;
+					} // case 1
+					default: {
+						System.out.println("메인 메뉴로 돌아갑니다.");
+						break MAIN;
+					} // default end
+					}// switch2 백돌 흑돌 놓기 end
+				} // for i (게임 반복 횟수) end
+				/* ★★★★★★★★★★★★★★★★★끝★★★★★★★★★★★★★★★★★★★★ */
 				break;
-
-			// 2. 도움말.
+			} // case 1
 			case 2: {
-				System.out.println("좌표를 입력하면 게임을 할 수 있다");
+				System.out.println("홀수번에는 ●을 짝수번에는 ○을 놓습니다.");
+				System.out.println("0~11사이 값을 2번 입력하세요.");
+				System.out.println();
+				System.out.println();
 				break;
-			}
-			// 3. 종료
+			} // case 2
 			case 3: {
-				System.out.println("종료");
-				break QUIT;
+				System.out.println("게임을 종료합니다.");
+				break OVER;
+			} // case 3
+			default: {
+				System.out.println("잘못된 값을 넣었습니다.");
+				System.out.println("1, 2, 3 중에 선택하세요.");
+				System.out.println();
 			}
-			}
-		}
+			}// switch1 전체 메뉴 end
+		} // while(true) 전체 end
+		scan.close();
 	}
 
 }

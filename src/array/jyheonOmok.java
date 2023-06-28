@@ -1,16 +1,19 @@
 package array;
 
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintWriter;
 import java.util.Scanner;
-
-import javax.security.auth.Destroyable;
 
 
 
 
 public class jyheonOmok {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws FileNotFoundException {
+		FileOutputStream fos = new FileOutputStream("res/student1-out.data");
+		PrintWriter fout = new PrintWriter(fos);
 	   
 		      /*
 		       * 
