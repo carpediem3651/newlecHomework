@@ -2,7 +2,7 @@ package function;
 
 import java.util.Scanner;
 
-public class HomeWork_0628_ver2 {
+public class HomeWork_0628_Q2 {
 	
 	private static void printScore(int[] scores) {
 		
