@@ -1,8 +1,14 @@
 package array;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Scanner;
+
 public class HyojoonOmok {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		// 0623과제 흑백 돌 번갈아두기 까지 만들기
 		// 저번에 한거는 순서기반, 이번에는 배열을통해서 순서기반을 벗어나보자
 		char[][] board = new char[12][12];

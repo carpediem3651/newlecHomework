@@ -2,10 +2,9 @@ package function;
 
 import java.util.Scanner;
 
-public class HomeWork_0628_Q2 {
+public class HomeWork_0628_Q2_scoreFunction {
 	
 	private static void printScore(int[] scores) {
-		
 		
 		System.out.print("┌──────────────────┐\n");
 		System.out.print(" 성적 출력 \n");
